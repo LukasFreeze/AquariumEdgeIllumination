@@ -6,9 +6,12 @@
 int front = 11;
 int back = 10;
 int left = 9;
-int right = 6;
+int right = 3; //6 in earlier versions, but that complicates PWM frequency changes
 
 void setup() {
+  //change PWM frequency to avoid visible flickering (https://we-mod-it.com/board258-diy-do-it-yourself/board263-diy-how-to/board231-raspberry-arduino/2458-arduino-tutorial-3-l%C3%BCfter-per-pwm-steuern/)
+  TCCR1B = TCCR1B & 0b11111000 | 0x01; //increased frequency to 31300 Hz for timer1 (pins 9,10)
+  TCCR2B = TCCR2B & 0b11111000 | 0x01; //increased frequency to 31300 Hz for timer2 (pins 3,11)
    // initialize pin <front> as an output.
   pinMode(front, OUTPUT);
   // initialize pin <back> as an output.
